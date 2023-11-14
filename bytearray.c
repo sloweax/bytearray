@@ -3,6 +3,9 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <unistd.h>
+
+#define MAX(x, y) (x) > (y) ? (x) : (y)
 
 bytearray *bytearray_create(size_t cap)
 {
@@ -72,5 +75,26 @@ bool bytearray_set(bytearray *b, const void *data, size_t len)
 
 	memcpy(b->data, data, len);
 	b->len = len;
+	return true;
+}
+
+bool bytearray_read(bytearray *b, int fd)
+{
+	uint8_t buf[2048];
+	ssize_t n;
+
+	while ((n = read(fd, buf, sizeof(buf)))) {
+		if (n == -1)
+			return false;
+
+		if (b->len + n > b->cap) {
+			if (!bytearray_reserve(b, MAX(b->cap * 2, n + b->cap)))
+				return false;
+		}
+
+		memcpy(b->data + b->len, buf, n);
+		b->len += n;
+	}
+
 	return true;
 }
