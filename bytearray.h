@@ -17,3 +17,5 @@ bool bytearray_reserve(bytearray *b, size_t cap);
 bool bytearray_set(bytearray *b, const void *data, size_t len);
 bool bytearray_cat(bytearray *b, const void *data, size_t len);
 bool bytearray_read(bytearray *b, int fd);
+bool bytearray_nread(bytearray *b, int fd, size_t max);
+void bytearray_clear(bytearray *b);
