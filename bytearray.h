@@ -19,3 +19,4 @@ bool bytearray_cat(bytearray *b, const void *data, size_t len);
 bool bytearray_read(bytearray *b, int fd);
 bool bytearray_nread(bytearray *b, int fd, size_t max);
 void bytearray_clear(bytearray *b);
+bool bytearray_fit(bytearray *b);

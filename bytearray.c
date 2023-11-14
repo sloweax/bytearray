@@ -126,3 +126,24 @@ void bytearray_clear(bytearray *b)
 {
 	b->len = 0;
 }
+
+bool bytearray_fit(bytearray *b)
+{
+	if (b->len == b->cap)
+		return true;
+
+	if (b->len == 0) {
+		free(b->data);
+		b->data = NULL;
+		b->cap = 0;
+	} else {
+		uint8_t *ndata = realloc(b->data, b->len);
+		if (ndata == NULL)
+			return false;
+
+		b->cap = b->len;
+		b->data = ndata;
+	}
+
+	return true;
+}
