@@ -6,3 +6,6 @@ void test_grow(void);
 void test_static_grow(void);
 void test_reserve(void);
 void test_static_reserve(void);
+void test_fit(void);
+void test_static_fit(void);
+void test_init(void);

@@ -10,5 +10,8 @@ int main()
 	test_static_grow();
 	test_reserve();
 	test_static_reserve();
+	test_fit();
+	test_static_fit();
+	test_init();
 	result();
 }

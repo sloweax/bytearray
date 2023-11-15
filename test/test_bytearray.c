@@ -107,5 +107,41 @@ void test_fit(void)
 	struct bytearray *a = bytearray_create(0);
 	assert(a);
 
+	assert(bytearray_fit(a));
+
+	ASSERT(a->cap == 0 && a->len == 0);
+
 	bytearray_free(a);
+
+	a = bytearray_create(32);
+	assert(a);
+	a->len++;
+
+	assert(bytearray_fit(a));
+
+	ASSERT(a->cap == 1 && a->len == 1 && a->data);
+
+	a->len = 0;
+	assert(bytearray_fit(a));
+
+	ASSERT(a->cap == 0 && a->len == 0 && a->data == NULL);
+
+	bytearray_free(a);
+}
+
+void test_static_fit(void)
+{
+	struct bytearray a = BYTEARRAY_STATIC_CREATE(32);
+	ASSERT(bytearray_fit(&a));
+	ASSERT(a.cap == 32 && a.len == 0 && a.data);
+}
+
+void test_init(void)
+{
+	struct bytearray a;
+	bytearray_init(&a);
+
+	ASSERT(a.cap == 0 && a.len == 0);
+	ASSERT(!(a.flags & BYTEARRAY_STRUCT_ALLOC));
+	ASSERT(a.flags & BYTEARRAY_DATA_ALLOC);
 }
