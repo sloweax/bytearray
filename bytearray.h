@@ -10,6 +10,12 @@ typedef struct {
   uint8_t *data;
 } bytearray;
 
+#define BYTEARRAY_STATIC_CREATE(CAP) { \
+    .len = 0, \
+    .cap = (CAP), \
+    .data = (uint8_t[CAP]){0} \
+  }
+
 bytearray *bytearray_create(size_t cap);
 void bytearray_free(bytearray *b);
 bool bytearray_grow(bytearray *b, size_t cap);
