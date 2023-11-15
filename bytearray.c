@@ -8,9 +8,9 @@
 #define MAX(x, y) (x) > (y) ? (x) : (y)
 #define MIN(x, y) (x) < (y) ? (x) : (y)
 
-bytearray *bytearray_create(size_t cap)
+struct bytearray *bytearray_create(size_t cap)
 {
-	bytearray *b = malloc(sizeof(bytearray));
+	struct bytearray *b = malloc(sizeof(struct bytearray));
 	if (b == NULL)
 		return NULL;
 
@@ -30,13 +30,13 @@ bytearray *bytearray_create(size_t cap)
 	return b;
 }
 
-void bytearray_free(bytearray *b)
+void bytearray_free(struct bytearray *b)
 {
 	free(b->data);
 	free(b);
 }
 
-bool bytearray_grow(bytearray *b, size_t cap)
+bool bytearray_grow(struct bytearray *b, size_t cap)
 {
 	if (cap == 0)
 		return true;
@@ -51,7 +51,7 @@ bool bytearray_grow(bytearray *b, size_t cap)
 	return true;
 }
 
-bool bytearray_reserve(bytearray *b, size_t cap)
+bool bytearray_reserve(struct bytearray *b, size_t cap)
 {
 	if (cap <= b->cap)
 		return true;
@@ -59,7 +59,7 @@ bool bytearray_reserve(bytearray *b, size_t cap)
 	return bytearray_grow(b, cap - b->cap);
 }
 
-bool bytearray_cat(bytearray *b, const void *data, size_t len)
+bool bytearray_cat(struct bytearray *b, const void *data, size_t len)
 {
 	if (!bytearray_reserve(b, b->len + len))
 		return false;
@@ -69,7 +69,7 @@ bool bytearray_cat(bytearray *b, const void *data, size_t len)
 	return true;
 }
 
-bool bytearray_set(bytearray *b, const void *data, size_t len)
+bool bytearray_set(struct bytearray *b, const void *data, size_t len)
 {
 	if (!bytearray_reserve(b, len))
 		return false;
@@ -79,7 +79,7 @@ bool bytearray_set(bytearray *b, const void *data, size_t len)
 	return true;
 }
 
-bool bytearray_read(bytearray *b, int fd)
+bool bytearray_read(struct bytearray *b, int fd)
 {
 	uint8_t buf[2048];
 	ssize_t n;
@@ -100,7 +100,7 @@ bool bytearray_read(bytearray *b, int fd)
 	return true;
 }
 
-bool bytearray_nread(bytearray *b, int fd, size_t max)
+bool bytearray_nread(struct bytearray *b, int fd, size_t max)
 {
 	uint8_t buf[2048];
 	ssize_t n;
@@ -122,12 +122,12 @@ bool bytearray_nread(bytearray *b, int fd, size_t max)
 	return true;
 }
 
-void bytearray_clear(bytearray *b)
+void bytearray_clear(struct bytearray *b)
 {
 	b->len = 0;
 }
 
-bool bytearray_fit(bytearray *b)
+bool bytearray_fit(struct bytearray *b)
 {
 	if (b->len == b->cap)
 		return true;
