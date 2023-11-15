@@ -24,6 +24,7 @@ enum bytearray_flags {
   }
 
 struct bytearray *bytearray_create(size_t cap);
+void bytearray_init(struct bytearray *b);
 void bytearray_free(struct bytearray * b);
 bool bytearray_grow(struct bytearray * b, size_t cap);
 bool bytearray_reserve(struct bytearray * b, size_t cap);

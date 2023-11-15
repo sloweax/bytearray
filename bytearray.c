@@ -149,3 +149,10 @@ bool bytearray_fit(struct bytearray *b)
 
 	return true;
 }
+
+void bytearray_init(struct bytearray *b)
+{
+	b->cap = b->len = 0;
+	b->data = NULL;
+	b->flags = BYTEARRAY_DATA_ALLOC;
+}
