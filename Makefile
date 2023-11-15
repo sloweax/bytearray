@@ -10,6 +10,7 @@ libbytearray.a: bytearray.o
 
 clean:
 	rm -f *.o *.a
+	cd test && $(MAKE) clean
 
 install: libbytearray.a
 	cp -f $^ $(LIBDESTPATH)
@@ -19,4 +20,7 @@ uninstall:
 	rm -f $(LIBDESTPATH)/libbytearray.a
 	rm -f $(INCDESTPATH)/bytearray.h
 
-.PHONY: clean all install uninstall
+test: all
+	cd test && $(MAKE) && ./$@
+
+.PHONY: clean all install uninstall test
