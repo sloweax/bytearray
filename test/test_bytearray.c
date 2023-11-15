@@ -2,6 +2,7 @@
 #include "unit.h"
 #include "../bytearray.h"
 #include <assert.h>
+#include <string.h>
 
 void test_create(void)
 {
@@ -144,4 +145,40 @@ void test_init(void)
 	ASSERT(a.cap == 0 && a.len == 0);
 	ASSERT(!(a.flags & BYTEARRAY_STRUCT_ALLOC));
 	ASSERT(a.flags & BYTEARRAY_DATA_ALLOC);
+}
+
+void test_set(void)
+{
+	struct bytearray a = BYTEARRAY_STATIC_CREATE(10);
+
+	ASSERT(bytearray_set(&a, "abc", 4));
+	ASSERT(a.len == 4 && a.cap == 10);
+	ASSERT(strcmp((char *)a.data, "abc") == 0);
+
+	ASSERT(bytearray_set(&a, "a", 2));
+	ASSERT(a.len == 2 && a.cap == 10);
+	ASSERT(strcmp((char *)a.data, "a") == 0);
+
+	ASSERT(bytearray_set(&a, "a", 0));
+	ASSERT(a.len == 0 && a.cap == 10);
+
+	ASSERT(!bytearray_set(&a, "1234567890", 11));
+
+	ASSERT(a.len == 0 && a.data[0] != '1');
+}
+
+void test_cat(void)
+{
+	struct bytearray a = BYTEARRAY_STATIC_CREATE(10);
+
+	ASSERT(bytearray_cat(&a, "abc", 3));
+	ASSERT(bytearray_cat(&a, "123", 4));
+	ASSERT(bytearray_cat(&a, "xyz", 0));
+	ASSERT(a.len == 7 && a.cap == 10);
+	ASSERT(strcmp((char *)a.data, "abc123") == 0);
+
+	ASSERT(!bytearray_cat(&a, "1234567890", 11));
+
+	ASSERT(a.len == 7 && a.cap == 10);
+	ASSERT(strcmp((char *)a.data, "abc123") == 0);
 }

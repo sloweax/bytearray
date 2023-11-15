@@ -13,5 +13,7 @@ int main()
 	test_fit();
 	test_static_fit();
 	test_init();
+	test_set();
+	test_cat();
 	result();
 }

@@ -9,3 +9,5 @@ void test_static_reserve(void);
 void test_fit(void);
 void test_static_fit(void);
 void test_init(void);
+void test_set(void);
+void test_cat(void);
