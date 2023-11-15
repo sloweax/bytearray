@@ -14,17 +14,14 @@ struct bytearray *bytearray_create(size_t cap)
 	if (b == NULL)
 		return NULL;
 
-	uint8_t *data = NULL;
+	b->data = malloc(cap);
 
-	if (cap > 0) {
-		data = malloc(cap);
-		if (data == NULL) {
-			free(b);
-			return NULL;
-		}
+	if (b->data == NULL && cap != 0) {
+		free(b);
+		return NULL;
 	}
 
-	b->data = data;
+	b->flags = BYTEARRAY_STRUCT_ALLOC + BYTEARRAY_DATA_ALLOC;
 	b->cap = cap;
 	b->len = 0;
 	return b;
@@ -32,14 +29,19 @@ struct bytearray *bytearray_create(size_t cap)
 
 void bytearray_free(struct bytearray *b)
 {
-	free(b->data);
-	free(b);
+	if (b->data && b->flags & BYTEARRAY_DATA_ALLOC)
+		free(b->data);
+	if (b->flags & BYTEARRAY_STRUCT_ALLOC)
+		free(b);
 }
 
 bool bytearray_grow(struct bytearray *b, size_t cap)
 {
 	if (cap == 0)
 		return true;
+
+	if (!(b->flags & BYTEARRAY_DATA_ALLOC))
+		return false;
 
 	uint8_t *ndata = realloc(b->data, b->cap + cap);
 
@@ -129,7 +131,7 @@ void bytearray_clear(struct bytearray *b)
 
 bool bytearray_fit(struct bytearray *b)
 {
-	if (b->len == b->cap)
+	if (b->len == b->cap || !(b->flags & BYTEARRAY_DATA_ALLOC))
 		return true;
 
 	if (b->len == 0) {
