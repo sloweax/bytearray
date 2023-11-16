@@ -15,5 +15,7 @@ int main()
 	test_init();
 	test_set();
 	test_cat();
+	test_read();
+	test_nread();
 	result();
 }
