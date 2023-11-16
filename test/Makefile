@@ -2,6 +2,7 @@ include ../config.mk
 
 CFLAGS+=-L ..
 LIBS+=-l:libbytearray.a
+OBJ=test.o unit.o test_bytearray.o
 
 all: test
 
@@ -11,8 +12,8 @@ all: test
 %.o: %.c
 	$(CC) $(CFLAGS) $< -c -o $@
 
-test: ../libbytearray.a test.o unit.o test_bytearray.o
-	$(CC) $(CFLAGS) $^ $(LIBS) -o $@
+test: ../libbytearray.a $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBS) -o $@
 
 clean:
 	rm -f *.o test

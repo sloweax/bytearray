@@ -1,11 +1,12 @@
 include config.mk
 
 all: libbytearray.a
+OBJ=bytearray.o
 
 %.o: %.c
 	$(CC) $(CFLAGS) $^ -c -o $@
 
-libbytearray.a: bytearray.o
+libbytearray.a: $(OBJ)
 	$(AR) rcs $@ $^
 
 clean:
