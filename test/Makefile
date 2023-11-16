@@ -10,7 +10,7 @@ all: test
 	cd .. && $(MAKE) libbytearray.a
 
 %.o: %.c
-	$(CC) $(CFLAGS) $< -c -o $@
+	$(CC) $(CFLAGS) $^ -c -o $@
 
 test: ../libbytearray.a $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBS) -o $@
