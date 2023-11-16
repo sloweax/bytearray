@@ -211,7 +211,9 @@ void test_nread(void)
 	int fd = open("test.txt", O_RDONLY); // 'Hello\n'
 	assert(fd != -1);
 
-	ASSERT(bytearray_nread(&a, fd, 10));
+	ASSERT(bytearray_nread(&a, fd, 3));
+	ASSERT(a.len == 3);
+	ASSERT(bytearray_nread(&a, fd, 7));
 	ASSERT(bytearray_nread(&a, fd, 0));
 	ASSERT(a.len == 6 && a.cap == 10);
 	ASSERT(memcmp(a.data, "Hello\n", 6) == 0);
