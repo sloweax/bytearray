@@ -2,7 +2,7 @@ include config.mk
 
 all: libbytearray.so libbytearray.a
 
-OBJ=bytearray.o hex.o
+OBJ=bytearray.o hex.o read.o
 
 %.o: %.c
 	$(CC) $(CFLAGS) $^ -c -o $@
