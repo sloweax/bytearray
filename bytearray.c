@@ -156,3 +156,18 @@ void bytearray_init(struct bytearray *b)
 	b->data = NULL;
 	b->flags = BYTEARRAY_DATA_ALLOC;
 }
+
+bool bytearray_hexencode(struct bytearray *b, const void *data, size_t len)
+{
+	if (!bytearray_reserve(b, b->len + len * 2))
+		return false;
+
+	char hex[16] = "0123456789abcdef";
+
+	for (size_t i = 0; i < len; i++) {
+		b->data[b->len++] = hex[((uint8_t *)data)[i] >> 4];
+		b->data[b->len++] = hex[((uint8_t *)data)[i] & 0x0f];
+	}
+
+	return true;
+}

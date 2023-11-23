@@ -221,3 +221,15 @@ void test_nread(void)
 
 	close(fd);
 }
+
+void test_hexencode(void)
+{
+	struct bytearray b = BYTEARRAY_STATIC_CREATE(20);
+	uint8_t data[5] = { 0x12, 0x34, 0xca, 0xfe, 0xf9 };
+
+	ASSERT(bytearray_hexencode(&b, data, 5));
+	ASSERT(memcmp(b.data, "1234cafef9", 10) == 0 && b.len == 10);
+	ASSERT(bytearray_hexencode(&b, data, 5));
+	ASSERT(memcmp(b.data, "1234cafef91234cafef9", 20) == 0 && b.len == 20);
+	ASSERT(!bytearray_hexencode(&b, data, 5));
+}

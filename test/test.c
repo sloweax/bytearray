@@ -17,5 +17,6 @@ int main()
 	test_cat();
 	test_read();
 	test_nread();
+	test_hexencode();
 	result();
 }
