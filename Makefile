@@ -18,7 +18,7 @@ clean:
 	cd test && $(MAKE) clean
 
 install: all
-	cp -f $^ $(LIBDESTPATH)
+	cp -f libbytearray.* $(LIBDESTPATH)
 	cp -f bytearray.h $(INCDESTPATH)
 
 uninstall:
