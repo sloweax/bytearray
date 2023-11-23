@@ -13,5 +13,3 @@ void test_set(void);
 void test_cat(void);
 void test_read(void);
 void test_nread(void);
-void test_hexencode(void);
-void test_hexdecode(void);

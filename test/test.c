@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "test_bytearray.h"
+#include "test_hex.h"
 #include "unit.h"
 
 int main()
