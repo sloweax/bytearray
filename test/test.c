@@ -18,5 +18,6 @@ int main()
 	test_read();
 	test_nread();
 	test_hexencode();
+	test_hexdecode();
 	result();
 }

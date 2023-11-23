@@ -36,3 +36,4 @@ bool bytearray_nread(struct bytearray *b, int fd, size_t max);
 void bytearray_clear(struct bytearray *b);
 bool bytearray_fit(struct bytearray *b);
 bool bytearray_hexencode(struct bytearray *b, const void *data, size_t len);
+bool bytearray_hexdecode(struct bytearray *b, const void *data, size_t len);
