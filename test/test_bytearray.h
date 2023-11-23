@@ -11,5 +11,3 @@ void test_static_fit(void);
 void test_init(void);
 void test_set(void);
 void test_cat(void);
-void test_read(void);
-void test_nread(void);

@@ -2,7 +2,7 @@ include ../config.mk
 
 CFLAGS+=-L ..
 LIBS+=-l:libbytearray.a
-OBJ=test.o unit.o test_bytearray.o test_hex.o
+OBJ=test.o unit.o test_bytearray.o test_hex.o test_read.o
 
 all: test
 
