@@ -20,10 +20,16 @@ void test_hexdecode(void)
 	char *hex = "1234cafef9";
 	ASSERT(bytearray_hexdecode(&b, hex, 10) && b.len == 5);
 	ASSERT(memcmp(b.data, "\x12\x34\xca\xfe\xf9", 5) == 0);
-	ASSERT(bytearray_hexdecode(&b, hex, 8) && b.len == 9);
-	ASSERT(memcmp(b.data, "\x12\x34\xca\xfe\xf9\x12\x34\xca\xfe", 6) == 0);
+
+	ASSERT(bytearray_hexdecode(&b, hex, 0) && b.len == 5);
+	ASSERT(memcmp(b.data, "\x12\x34\xca\xfe\xf9", 5) == 0);
+
+	ASSERT(bytearray_hexdecode(&b, hex, 7) && b.len == 9);
+	ASSERT(memcmp(b.data, "\x12\x34\xca\xfe\xf9\x12\x34\xca\xf0", 9) == 0);
+
 	ASSERT(bytearray_hexdecode(&b, hex, 1) && b.len == 10);
-	ASSERT(memcmp(b.data, "\x12\x34\xca\xfe\xf9\x12\x34\xca\xfe\xf0", 6) ==
+	ASSERT(memcmp(b.data, "\x12\x34\xca\xfe\xf9\x12\x34\xca\xf0\x10", 10) ==
 	       0);
-	ASSERT(!bytearray_hexdecode(&b, hex, 1));
+
+	ASSERT(!bytearray_hexdecode(&b, hex, 1) && b.len == 10);
 }
