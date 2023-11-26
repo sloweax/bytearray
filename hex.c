@@ -37,7 +37,7 @@ bool bytearray_hexdecode(struct bytearray *b, const void *data, size_t len)
 			b->data[b->len] = tmp << 4;
 	}
 
-	if (len == 1)
+	if (len % 2)
 		b->len++;
 
 	return true;
